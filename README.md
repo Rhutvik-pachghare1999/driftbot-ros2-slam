@@ -2,7 +2,14 @@
 
 [![CI](https://github.com/Rhutvik-pachghare1999/driftbot-ros2-slam/actions/workflows/ci.yml/badge.svg)](https://github.com/Rhutvik-pachghare1999/driftbot-ros2-slam/actions/workflows/ci.yml)
 
-A reproducible ROS 2 Jazzy simulation stack integrating Gazebo Harmonic, Clearpath Jackal j100, SICK LMS1xx lidar, robot_localization EKF, slam_toolbox, and Nav2. The project evaluates localization and map reconstruction against **Gazebo simulator ground truth** using trajectory ATE and continuous-surface map metrics.
+A SLAM map can look fine in RViz and still be wrong. I built DriftBot
+so I could check a Jackal's pose estimate and map against the actual
+geometry in Gazebo, instead of judging them by eye.
+
+It runs ROS 2 Jazzy, Gazebo Harmonic, a SICK LiDAR, robot_localization
+EKF, and SLAM Toolbox. I use trajectory error and continuous-surface map
+metrics to evaluate the result. There's a Nav2 configuration too; the
+published numbers below are from the scripted-drive evaluation.
 
 ---
 
