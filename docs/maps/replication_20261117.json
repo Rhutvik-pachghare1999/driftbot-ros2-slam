@@ -1,0 +1,68 @@
+{
+  "run_date": "2026-11-17",
+  "evidence_class": "SIMULATED",
+  "repo_commit": "c708fa3221f2662f5cf5f0c23c267abad5fbb309",
+  "platform": "Rhutvik-OMEN Ubuntu 24.04; ROS 2 Jazzy; Gazebo Harmonic; headless",
+  "isolation": {
+    "ROS_DOMAIN_ID": 144,
+    "GZ_PARTITION": "github-audit-drift-20261117"
+  },
+  "launch": "ros2 launch driftbot_bringup sim.launch.py headless:=true start_rviz:=false enable_nav2:=false",
+  "evaluator": "python3 -u scripts/sim_e2e_run.py",
+  "comparison": {
+    "prior_committed_artifact": "docs/maps/sim_e2e_results.json",
+    "prior_ate_rmse_m": 0.057,
+    "prior_map_precision_rmse_m": 0.0267
+  },
+  "qualification": "New reproducible execution, same scripted 9-segment sim-time route; differing sensor rates and map precision mean exact determinism is NOT established; not autonomous Nav2 or hardware.",
+  "results": {
+    "drive": {
+      "segments": 9,
+      "duration_s": 52.28,
+      "cmds_published": 523,
+      "path_len_odom_m": 8.96
+    },
+    "rates_hz": {
+      "/scan": 30.2,
+      "/imu/data": 50.2,
+      "/platform/odom": 50.2,
+      "/odom": 30.0,
+      "/gt_odom": 50.2,
+      "/platform/joint_states": 50.2
+    },
+    "trajectory": {
+      "ate_rmse_ekf_m": 0.0549,
+      "ate_rmse_controller_m": 0.0556,
+      "synced_samples_ekf": 1565,
+      "final_pose_error_ekf": {
+        "x": 0.0113,
+        "y": -0.1055,
+        "heading": 0.0157,
+        "euclidean": 0.1061
+      },
+      "final_pose_error_controller": {
+        "x": -0.0016,
+        "y": -0.1139,
+        "heading": 0.0185,
+        "euclidean": 0.1139
+      }
+    },
+    "map": {
+      "width": 171,
+      "height": 50,
+      "resolution_m": 0.05000000074505806,
+      "occupied_cells": 572,
+      "free_cells": 7769,
+      "unknown_cells": 209,
+      "metrics_vs_gt_surfaces": {
+        "precision_rmse_m": 0.0441,
+        "precision_within_5cm": 0.8357,
+        "precision_within_10cm": 0.9231,
+        "spurious_cells_beyond_30cm": 0,
+        "recall_within_10cm": 0.9992,
+        "n_surface_samples": 1210
+      },
+      "iou_occupied_raster_reference": 0.309
+    }
+  }
+}
