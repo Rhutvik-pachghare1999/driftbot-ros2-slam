@@ -14,6 +14,9 @@ A reproducible ROS 2 Jazzy simulation stack integrating Gazebo Harmonic, Clearpa
 
 ## Benchmark (Teleop Evaluation)
 
+**Independent headless replay (2026-11-17):** 9 scripted segments completed again under ROS 2 Jazzy/Gazebo. EKF ATE RMSE was **0.0549 m** (original artifact: 0.057 m); map precision RMSE was **0.0441 m** (original: 0.0267 m); observable-surface recall at 10 cm was **99.92%** (original: 99.75%), with **0** spurious cells beyond 30 cm. The measured /scan rate was **30.2 Hz** versus 90.6 Hz in the older recorded run. This demonstrates execution but **not bitwise deterministic benchmark outcomes**; the variation needs profiling before making cross-run repeatability claims. See the [full run configuration and measurements](docs/maps/replication_20261117.json). No hardware or autonomous Nav2 success is implied.
+
+
 ### Trajectory (8.96 m scripted teleop, 1,565 EKF↔GT synced samples)
 
 | Metric | Value |
@@ -77,6 +80,16 @@ Gazebo (gz sim)
 ```
 
 ---
+
+## Inspect the published artifact without ROS 2
+
+The [recorded simulation metrics](docs/maps/sim_e2e_results.json) are a committed result, not a live rerun. Confirm its reported values with:
+
+```bash
+python3 -c 'import json; d=json.load(open("docs/maps/sim_e2e_results.json")); assert d["trajectory"]["synced_samples_ekf"] == 1565; print("Scripted teleop ATE RMSE (m):", d["trajectory"]["ate_rmse_ekf_m"]); print("Map precision RMSE (m):", d["map"]["metrics_vs_gt_surfaces"]["precision_rmse_m"])'
+```
+
+To **reproduce** the benchmark, run the separate Gazebo/ROS 2 commands below; reading JSON alone is an artifact-integrity check, not independent physics validation. Nav2 autonomous navigation was not part of these scores.
 
 ## Quick Start
 
